@@ -1,0 +1,46 @@
+CREATE DATABASE site;
+SHOW DATABASES;
+USE site;
+CREATE TABLE cliente(
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(100) NOT NULL,
+email VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE plano_hospedagem(
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(50) NOT NULL,
+espaco_gb INT NOT NULL,
+preco DECIMAL (7,2) NOT NULL);
+
+CREATE TABLE servidor(
+id INT PRIMARY KEY AUTO_INCREMENT,
+hostname VARCHAR(60)  NOT NULL UNIQUE,
+ip  VARCHAR(15) NOT NULL UNIQUE,
+localizacao VARCHAR(40)
+);
+
+CREATE TABLE site_hospedagem(
+id INT PRIMARY KEY AUTO_INCREMENT,
+dominio VARCHAR(100) NOT NULL UNIQUE,
+data_contratacao DATE NOT NULL,
+cliente_id INT NOT NULL,
+FOREIGN KEY (cliente_id)
+REFERENCES cliente(id));
+
+CREATE TABLE certificado_ss1(
+id INT PRIMARY KEY AUTO_INCREMENT,
+data_validade DATE NOT NULL,
+site_id INT NOT NULL UNIQUE,
+FOREIGN KEY (site_id)
+REFERENCES site_hospedagem(id));
+
+ALTER TABLE servidor ADD sistema_operacional VARCHAR(30);
+
+ALTER TABLE servidor MODIFY ip VARCHAR(45);
+
+ALTER TABLE servidor drop column localizacao;
+
+DESCRIBE servidor;
+
+
